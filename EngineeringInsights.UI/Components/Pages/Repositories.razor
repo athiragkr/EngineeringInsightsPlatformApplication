@@ -1,0 +1,52 @@
+﻿@page "/repositories"
+@using EngineeringInsights.UI.Models
+@using EngineeringInsights.UI.Services
+
+@inject EngineeringInsightsApiService ApiService
+
+<h3>Repositories</h3>
+
+@if (repositories == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Risk</th>
+                <th>Score</th>
+                <th>Owner</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var repo in repositories)
+            {
+                <tr>
+                    <td>@repo.Name</td>
+                    <td>@repo.RiskLevel</td>
+                    <td>@repo.RiskScore</td>
+                    <td>@repo.OwnerTeam</td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+
+@code {
+
+    List<Repository>? repositories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        repositories =
+            await ApiService.GetRepositoriesAsync();
+    }
+}

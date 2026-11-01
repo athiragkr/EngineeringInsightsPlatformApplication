@@ -1,0 +1,10 @@
+@EngineeringInsights_HostAddress = https://localhost:44374
+
+### Dashboard
+GET {{EngineeringInsights_HostAddress}}/api/dashboard
+
+### Repositories
+GET {{EngineeringInsights_HostAddress}}/api/repositories
+
+### High Risk
+GET {{EngineeringInsights_HostAddress}}/api/repositories/high-risk

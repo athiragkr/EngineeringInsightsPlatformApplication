@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="EngineeringInsights.Application/EngineeringInsights.Application.csproj" Id="57010e0f-7063-43d7-9e16-3debe983c81a" />
+  <Project Path="EngineeringInsights.Infrastructure/EngineeringInsights.Infrastructure.csproj" Id="852e64fe-fed1-40cd-868a-0603b9df71b0" />
+  <Project Path="EngineeringInsights.Tests/EngineeringInsights.Tests.csproj" Id="84303b8b-6d50-4df1-a87e-14d172b93efb" />
+  <Project Path="EngineeringInsights.UI/EngineeringInsights.UI.csproj" Id="9cb4d243-253c-4b3c-ba63-70a8451fe6b6" />
+  <Project Path="EngineeringInsights/EngineeringInsights.csproj" Id="eb70892d-b553-4a48-bbc0-6bea4f5eaf61" />
+</Solution>

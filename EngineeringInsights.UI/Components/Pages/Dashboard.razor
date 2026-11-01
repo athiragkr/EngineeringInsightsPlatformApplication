@@ -1,0 +1,57 @@
+﻿@page "/dashboard"
+@using EngineeringInsights.UI.Models
+@using EngineeringInsights.UI.Services
+
+@inject EngineeringInsightsApiService ApiService
+
+<h3>Engineering Insights Dashboard</h3>
+
+@if (summary == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="row">
+
+        <div class="col">
+            <h2>@summary.TotalRepositories</h2>
+            <p>Total Repositories</p>
+        </div>
+
+        <div class="col">
+            <h2>@summary.HighRisk</h2>
+            <p>High Risk</p>
+        </div>
+
+        <div class="col">
+            <h2>@summary.MediumRisk</h2>
+            <p>Medium Risk</p>
+        </div>
+
+        <div class="col">
+            <h2>@summary.LowRisk</h2>
+            <p>Low Risk</p>
+        </div>
+
+    </div>
+}
+
+@code {
+
+    private DashboardSummary? summary;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            summary = await ApiService.GetDashboardAsync();
+
+            Console.WriteLine("Dashboard Loaded");
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}

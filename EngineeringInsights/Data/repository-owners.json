@@ -1,0 +1,18 @@
+[
+  {
+    "repositoryName": "runtime",
+    "ownerTeam": "Platform Team"
+  },
+  {
+    "repositoryName": "aspnetcore",
+    "ownerTeam": "Web Team"
+  },
+  {
+    "repositoryName": "efcore",
+    "ownerTeam": "Data Team"
+  },
+  {
+    "repositoryName": "roslyn",
+    "ownerTeam": "Compiler Team"
+  }
+]
