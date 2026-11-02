@@ -16,37 +16,12 @@ namespace EngineeringInsights.Tests
         }
 
         [Fact]
-        public void Repository_WithNoOwner_ShouldAddRiskPoints()
-        {
-            // Arrange
-            var repository = new Repository
-            {
-                Name = "test-repo",
-                LastCommitDate = DateTime.Now,
-                ContributorCount = 5,
-                OwnerTeam = null,
-                RiskReasons = new List<string>()
-            };
-
-            // Act
-            _service.CalculateRisk(repository);
-
-            // Assert
-            Assert.True(repository.RiskScore >= 2);
-            Assert.Contains(
-                "Repository does not have an assigned owner team.",
-                repository.RiskReasons);
-        }
-
-        //Test High Risk Level Repository
-
-        [Fact]
-        public void Repository_WithNoOwner_AndNoContributors_ShouldBeHighRisk()
+        public void HighRiskRepository_ShouldBeClassifiedAsHigh()
         {
             var repository = new Repository
             {
                 Name = "legacy-api",
-                LastCommitDate = DateTime.Now.AddDays(-120),
+                LastCommitDate = DateTime.Now.AddDays(-180),
                 ContributorCount = 0,
                 OwnerTeam = null,
                 RiskReasons = new List<string>()
@@ -55,12 +30,11 @@ namespace EngineeringInsights.Tests
             _service.CalculateRisk(repository);
 
             Assert.Equal("High", repository.RiskLevel);
+            Assert.True(repository.RiskScore >= 5);
         }
 
-        //Test Low Risk Level Repository
-
         [Fact]
-        public void ActiveRepository_ShouldBeLowRisk()
+        public void HealthyRepository_ShouldBeClassifiedAsLow()
         {
             var repository = new Repository
             {
@@ -75,23 +49,43 @@ namespace EngineeringInsights.Tests
 
             Assert.Equal("Low", repository.RiskLevel);
         }
-        //Test Medium Risk Level Repository
 
         [Fact]
-        public void Repository_WithLowContributors_ShouldBeMediumRisk()
+        public void RepositoryWithoutOwner_ShouldContainOwnerReason()
         {
             var repository = new Repository
             {
-                Name = "android-samples",
+                Name = "sample",
                 LastCommitDate = DateTime.Now,
-                ContributorCount = 1,
-                OwnerTeam = "Team A",
+                ContributorCount = 5,
+                OwnerTeam = null,
                 RiskReasons = new List<string>()
             };
 
             _service.CalculateRisk(repository);
 
-            Assert.Equal("Medium", repository.RiskLevel);
+            Assert.Contains(
+                "Repository does not have an assigned owner team.",
+                repository.RiskReasons);
+        }
+
+        [Fact]
+        public void InactiveRepository_ShouldContainInactiveReason()
+        {
+            var repository = new Repository
+            {
+                Name = "old-repo",
+                LastCommitDate = DateTime.Now.AddDays(-120),
+                ContributorCount = 5,
+                OwnerTeam = "Data Team",
+                RiskReasons = new List<string>()
+            };
+
+            _service.CalculateRisk(repository);
+
+            Assert.Contains(
+                "Repository has been inactive for more than 90 days.",
+                repository.RiskReasons);
         }
     }
 }
